@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'home.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   // Controllers for input fields
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
@@ -70,9 +71,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       // Go to home screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  Scaffold(
-          body: Center(child: Text('Home Screen')),
-        )),
+        MaterialPageRoute(builder: (context) =>  HomeScreen()),
       );
     } catch (e) {
       // Show error message

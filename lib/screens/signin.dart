@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'signup.dart';
+import 'home.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignInScreenState createState() => _SignInScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   // Controllers to get text from input fields
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -46,9 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // If successful, go to home screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  Scaffold(
-          body: Center(child: Text('Home Screen')),
-        )),
+        MaterialPageRoute(builder: (context) =>  HomeScreen()),
       );
     } catch (e) {
       // If error, show message
@@ -167,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RegistrationScreen(),
+                            builder: (context) => SignUpScreen(),
                           ),
                         );
                       },
