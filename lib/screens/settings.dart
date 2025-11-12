@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'signin.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -50,7 +51,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   // Logout function
   Future<void> logout() async {
+    // Clear SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
+    await prefs.remove('userEmail');
+    
+    // Sign out from Firebase
     await auth.signOut();
+    
+    // Go to login screen
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => SignInScreen()),

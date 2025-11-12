@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'home.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -65,13 +66,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'registrationDateTime': DateTime.now(),
       });
 
+      // Save login state to SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+      await prefs.setString('userEmail', email);
+
       // Show success message
       showMessage('Registration successful!');
 
       // Go to home screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  HomeScreen()),
+        MaterialPageRoute(builder: (context) => HomeScreen()),
       );
     } catch (e) {
       // Show error message
@@ -187,7 +193,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                items: ['User'].map((String role) {
+                items: ['User', 'Admin', 'Moderator'].map((String role) {
                   return DropdownMenuItem<String>(
                     value: role,
                     child: Text(role),

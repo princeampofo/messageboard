@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'signup.dart';
 import 'home.dart';
 
@@ -44,10 +45,15 @@ class _SignInScreenState extends State<SignInScreen> {
         password: password,
       );
 
+      // Save login state to SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+      await prefs.setString('userEmail', email);
+
       // If successful, go to home screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  HomeScreen()),
+        MaterialPageRoute(builder: (context) => HomeScreen()),
       );
     } catch (e) {
       // If error, show message
